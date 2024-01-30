@@ -7,6 +7,17 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      sm: { min: "320px", max: "768px" },
+      // => @media (min-width: 320px) { ... }
+      md: { min: "768px", max: "1023px" },
+      // => @media (min-width: 768px) { ... }
+      lg: { min: "1024px", max: "1279px" },
+      // => @media (min-width: 1024px) { ... }
+      xl: { min: "1280px", max: "1535px" },
+      // => @media (min-width: 1280px) { ... }
+      "2xl": "1536px",
+    },
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -15,6 +26,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+
+  plugins: [require("daisyui")],
 };
 export default config;
