@@ -68,6 +68,8 @@ export interface IApiKeyboard {
   name: string;
   total: number;
   thumbnail: string[];
+  description: string;
+  totalPurchases: string | number;
   layout: string;
   switch_key: string;
   pin?: null | string;
@@ -87,3 +89,22 @@ export interface IApiKeyboard {
   product_type_keybourd: string;
   product_brand: string;
 }
+
+export interface IBrand {
+  _id: string;
+  name: string;
+  description: string;
+  type: string | string[];
+  thumbnail: string;
+}
+
+export type TButtonAddToCart = {
+  _id: number | string;
+  name: string;
+  thumbnail: string;
+  description: string;
+  total: number;
+};
+export type ProductCardProps = {
+  data: IApiProduct[] | IApiKeyboard[] | IApiMouse[];
+};

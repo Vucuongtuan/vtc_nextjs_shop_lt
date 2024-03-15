@@ -1,3 +1,4 @@
+import { dark } from "@mui/material/styles/createPalette";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -28,5 +29,9 @@ const config: Config = {
   },
 
   plugins: [require("daisyui")],
+  daisyui: {
+    themes: true,
+    darkTheme: "light",
+  },
 };
 export default config;
