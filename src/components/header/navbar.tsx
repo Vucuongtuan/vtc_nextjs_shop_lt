@@ -43,9 +43,11 @@ import { Icons } from "@/components/ui/icons";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
+
+import Cart from "../Cart/Cart";
+
 import SearchBox from "../searchBox";
 import LoginAndResigter from "../loginAndResigter";
-import Cart from "../Cart/Cart";
 
 const NavBar = ({
   menuLaptop,
