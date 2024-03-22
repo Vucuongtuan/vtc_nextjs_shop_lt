@@ -43,7 +43,7 @@ import { Icons } from "@/components/ui/icons";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import Cart from "../Cart";
+import Cart from "../Cart/index.tsx";
 import SearchBox from "../searchBox";
 import LoginAndResigter from "../loginAndResigter";
 
