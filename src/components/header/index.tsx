@@ -1,6 +1,6 @@
-import NavBar from "./navbar";
 import { Container } from "@mui/material";
 import { IMenuItem } from "@/types/ui/index.types";
+import NavBar from "./navbar";
 const menuLaptop: IMenuItem[] = [
   {
     id: 1,

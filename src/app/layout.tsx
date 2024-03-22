@@ -4,11 +4,9 @@ import "./globals.css";
 import Header from "@/components/header";
 import StoreProvider from "./StoreProvider";
 import Footer from "@/components/footer";
-import TanStackProviders from "./tanstackProvider";
 import { Toaster } from "@/components/ui/toaster";
-import { ThemeProvider } from "@/components/theme-provider";
-import { useToast } from "@/components/ui/use-toast";
-import { ToastAction } from "@/components/ui/toast";
+import TanStackProviders from "@/components/tanstackProvider";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
