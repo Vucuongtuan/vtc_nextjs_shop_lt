@@ -1,6 +1,6 @@
 const Footer = (): JSX.Element => {
   return (
-    <footer>
+    <footer className="px-16 sm:px-2">
       <div className="mx-auto max-w-screen-xl space-y-8 px-4 py-16 sm:px-6 lg:space-y-16 lg:px-8">
         <div className="grid grid-cols-6 gap-8 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1">
           <div className="col-span-2">
@@ -23,12 +23,12 @@ const Footer = (): JSX.Element => {
                 >
                   <span className="sr-only">Facebook</span>
                   {/* <svg
-                    className="h-6 w-6"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                  </svg> */}
+                      className="h-6 w-6"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                    </svg> */}
                 </a>
               </li>
               <li>
@@ -40,12 +40,12 @@ const Footer = (): JSX.Element => {
                 >
                   <span className="sr-only">Instagram</span>
                   {/* <svg
-                    className="h-6 w-6"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                  </svg> */}
+                      className="h-6 w-6"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                    </svg> */}
                 </a>
               </li>
               <li>
@@ -57,12 +57,12 @@ const Footer = (): JSX.Element => {
                 >
                   <span className="sr-only">Twitter</span>
                   {/* <svg
-                    className="h-6 w-6"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                  </svg> */}
+                      className="h-6 w-6"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                    </svg> */}
                 </a>
               </li>
               <li>
@@ -74,12 +74,12 @@ const Footer = (): JSX.Element => {
                 >
                   <span className="sr-only">GitHub</span>
                   {/* <svg
-                    className="h-6 w-6"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                  </svg> */}
+                      className="h-6 w-6"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                    </svg> */}
                 </a>
               </li>
               <li>
@@ -91,12 +91,12 @@ const Footer = (): JSX.Element => {
                 >
                   <span className="sr-only">Dribbble</span>
                   {/* <svg
-                    className="h-6 w-6"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                  </svg> */}
+                      className="h-6 w-6"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                    </svg> */}
                 </a>
               </li>
             </ul>

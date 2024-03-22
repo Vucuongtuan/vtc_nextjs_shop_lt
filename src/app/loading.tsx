@@ -5,7 +5,6 @@ const Loading = () => {
     <>
       <Paper
         sx={{
-          // display: isLoading ? "block" : "none",
           pointerEvents: "none",
           transition: "all .3s ease",
           top: 0,

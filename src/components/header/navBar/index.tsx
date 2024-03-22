@@ -1,251 +1,325 @@
 "use client";
-import { Button } from "@mui/material";
-import Image from "next/image";
-import React, { useCallback, useEffect, useState } from "react";
-import Cookies from "js-cookie";
-import FormLoginAndRegister from "../../formLogin";
-import { Container } from "postcss";
-import Link from "next/link";
-import { ModeToggle } from "../../ModeToggle";
-import { TButtonAddToCart } from "@/types/types";
-import { useDispatch, useSelector } from "react-redux";
+import { IMenuItem } from "@/types/ui/index.types";
+import { cn } from "@/lib/utils";
 import {
-  setCheckCartLocal,
-  setIsOpenModalCart,
-} from "@/lib/features/checkCartLocal";
-import Cart from "../../cart";
-import SearchBox from "../search";
-interface IMenu {
-  id: number;
-  name: string;
-  href: string;
-}
-const NavBar = ({ menu }: { menu: IMenu[] }) => {
-  const dispatch = useDispatch();
-  const [isOpenModalLogin, setIsOpenModalLogin] =
-    React.useState<boolean>(false);
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+} from "@/components/ui/navigation-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
-  const [cartTotal, setCartTotal] = React.useState<number>(0);
-  const typeCheck = useSelector(
-    (state: any) => state.checkCartLocal.checkCartLocal
-  );
-  const dataCart = useSelector((state: any) => state.checkCartLocal.arrayCart);
-  const handleOpenModel = React.useCallback(
-    () => setIsOpenModalLogin(true),
-    []
-  );
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
-  useEffect(() => {
-    const total = dataCart.reduce((acc: number, currentItem: any) => {
-      return acc + currentItem.total;
-    }, 0);
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import Cookies from "js-cookie";
+import React, { useEffect } from "react";
+import { Icons } from "@/components/ui/icons";
+import Link from "next/link";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
+import Cart from "@/components/Cart";
+import SearchBox from "@/components/searchBox";
+import LoginAndResigter from "@/components/loginAndResigter";
 
-    setCartTotal(total);
-    dispatch(setCheckCartLocal(false));
-  }, [dataCart]);
-  const drawerUI = () => (
-    <div className="drawer hidden sm:block sm:z-50">
-      <input id="my-drawer" type="checkbox" className="drawer-toggle " />
-      <div className="drawer-content ">
-        <label
-          htmlFor="my-drawer"
-          aria-label="open sidebar"
-          className="btn btn-square btn-ghost"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            className="inline-block w-6 h-6 stroke-current"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            ></path>
-          </svg>
-        </label>
-      </div>
-
-      <div className="drawer-side">
-        <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-          <label
-            htmlFor="my-drawer"
-            aria-label="close sidebar"
-            className="drawer-overlay "
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              width="30"
-              height="30"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              className="float-right"
-            >
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </label>
-          {menu.map((item) => (
-            <li key={item.id} className="mr-[16px] last:mr-0">
-              {item.name}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-  const checkLogin = () => {
-    const checkToken = Cookies?.get("userToken");
-    if (checkToken) {
-      const usernameLocal = localStorage.getItem("userData") ?? "";
+const NavBar = ({
+  menuLaptop,
+  menuMouse,
+}: {
+  menuLaptop: IMenuItem[];
+  menuMouse: IMenuItem[];
+}) => {
+  const LoginElement = () => {
+    if (typeof window !== "undefined") {
+      const checkToken = Cookies?.get("userToken");
+      const usernameLocal = localStorage?.getItem("userData") ?? "";
       const parseJson = JSON.parse(usernameLocal);
 
       return (
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
-          >
-            <div className="w-8 rounded-full relative">
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Button>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                strokeWidth={1.5}
+                stroke-width="1.5"
                 stroke="currentColor"
-                className="w-full h-full"
+                className="w-6 h-6"
               >
                 <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                   d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
                 />
               </svg>
-            </div>
-          </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow  rounded-box w-52 bg-white"
-          >
-            <span className="px-3">Username : {parseJson.userName}</span>
-            <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
-            <li>
-              <a
-                onClick={() => {
-                  Cookies.remove("userToken");
-                  localStorage.removeItem("userData");
-                  window.location.reload();
-                }}
-              >
-                Logout
-              </a>
-            </li>
-          </ul>
-        </div>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <span>
+              {checkToken ? (
+                <>
+                  <DropdownMenuLabel>
+                    Khách hàng : {parseJson.userName}
+                  </DropdownMenuLabel>
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                  <DropdownMenuItem>Billing</DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      Cookies.remove("userToken");
+                      window.location.reload();
+                    }}
+                  >
+                    Đăng xuất
+                  </DropdownMenuItem>
+                </>
+              ) : (
+                <div className="text-center">
+                  <LoginAndResigter />
+                </div>
+              )}
+            </span>
+            <DropdownMenuSeparator />
+            {/* <Accordion type="single" collapsible>
+              <AccordionItem value="item-2">
+                <AccordionTrigger>Giao diện</AccordionTrigger>
+                <AccordionContent>
+                  <div className="flex flex-wap">
+                    <RadioGroup defaultValue="option-one">
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem
+                          value="option-one"
+                          id="option-one"
+                          onClick={() => setTheme("light")}
+                        />
+                        <Label htmlFor="option-one">Light mode</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem
+                          value="option-two"
+                          id="option-two"
+                          onClick={() => setTheme("dark")}
+                        />
+                        <Label htmlFor="option-two">Dark mode </Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem
+                          value="option-three"
+                          id="option-three"
+                          onClick={() => setTheme("system")}
+                        />
+                        <Label htmlFor="option-three">System </Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion> */}
+          </DropdownMenuContent>
+        </DropdownMenu>
       );
-    } else {
-      return <Button onClick={handleOpenModel}>Đăng nhập</Button>;
     }
   };
-
+  const menuMobile = () => (
+    <Sheet>
+      <SheetTrigger asChild>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          className="w-6 h-6 inline-block"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"
+          />
+        </svg>
+      </SheetTrigger>
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>Menu</SheetTitle>
+        </SheetHeader>
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger>Laptop</AccordionTrigger>
+            {menuLaptop?.map((laptop) => (
+              <Link href={laptop.href} key={laptop.id}>
+                <AccordionContent>{laptop.title}</AccordionContent>
+              </Link>
+            ))}
+          </AccordionItem>
+        </Accordion>
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger>Chuột</AccordionTrigger>
+            {menuMouse?.map((mouse) => (
+              <Link href={mouse.href} key={mouse.id}>
+                <AccordionContent>{mouse.title}</AccordionContent>
+              </Link>
+            ))}
+          </AccordionItem>
+        </Accordion>
+        <SheetFooter>
+          <SheetClose asChild>
+            <button type="submit">Save changes</button>
+          </SheetClose>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+  );
   return (
-    <div className=" w-full  h-[60%] m-auto ">
-      <div className="navbar  ">
-        <div className="flex-1">
-          <div className="flex">
-            {drawerUI()}
-            <h1 className="btn btn-ghost text-xl">LAPTOP_VTC</h1>
-          </div>{" "}
-          <div className="m-auto relative">{/* <SearchBox /> */}</div>
-        </div>
-
-        <div className="flex-none">
-          <div className="dropdown dropdown-end ">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle "
-            >
-              <div className="indicator">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-                <span className="badge badge-sm indicator-item">
-                  {dataCart?.length || 0}
-                </span>
-              </div>
-            </div>
-            <div
-              tabIndex={0}
-              className="mt-3 z-[1] card card-compact dropdown-content w-[300px] bg-base-100 shadow"
-            >
-              {" "}
-              <div className="card-body bg-white">
-                <span className="font-bold text-lg">
-                  {" "}
-                  {dataCart?.length || 0} Items
-                </span>
-                <span className="text-info">
-                  Subtotal:{" "}
-                  {cartTotal?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-                  VND
-                </span>
-                <div className="card-actions">
-                  <button
-                    className="btn btn-primary btn-block"
-                    onClick={() => dispatch(setIsOpenModalCart(true))}
-                  >
-                    View cart
-                  </button>
-                </div>
-              </div>
-            </div>
+    <>
+      <div className="flex justify-between items-center h-[50px] sm:h-[60px] ">
+        <div className="w-[200px] flex justify-center items-center sm:w-[]">
+          <div className=" ml-2">
+            <h1>LaptopTC</h1>
           </div>
-          {checkLogin()}
+        </div>
+        <div className="grow px-16 py-2 sm:hidden">
+          <SearchBox />
+        </div>
+        <div className="w-[150px]">
+          <div
+            className="h-full w-full  text-center 
+          "
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "end",
+            }}
+          >
+            <div className="flex  items-center justify-around w-[200px]">
+              {LoginElement()}
+              <Cart />
+            </div>
+            <div className="hidden sm:block w-[50px]">{menuMobile()}</div>
+          </div>
         </div>
       </div>
-      <nav>
-        <ul className="flex items-center h-full relative z-10 w-full sm:hidden">
-          {menu.map((item) => (
-            <Link href={item.href} key={item.id} className="">
-              <Button className="">{item.name}</Button>
-            </Link>
-          ))}
-        </ul>
-      </nav>
-      <FormLoginAndRegister
-        isOpenModalLogin={isOpenModalLogin}
-        setIsOpenModalLogin={setIsOpenModalLogin}
-      />
-      {/* <Cart open={isOpenModalCart} /> */}
-    </div>
+      <div className=" h-[40px] flex items-end sm:hidden">
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>Laptop</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="w-full grid gap-3 grid-cols-4 grid-rows-3 p-6 ">
+                  <li className="row-span-2 col-span-2">
+                    <NavigationMenuLink asChild>
+                      <Link
+                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                        href="/product/laptop"
+                      >
+                        <Icons.logo className="h-6 w-6" />
+                        <Link
+                          href="product/laptop"
+                          className="mb-2 mt-4 text-lg font-medium"
+                        >
+                          Laptop mới nhất
+                        </Link>
+                        <p className="text-sm leading-tight text-muted-foreground">
+                          Chuyên cung cấp các mặt hàng laptop văn
+                          phòng,gaming,...
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                  </li>
+                  {menuLaptop.map((menu) => (
+                    <ListItem href={menu.href} title={menu.title} key={menu.id}>
+                      {menu.models?.join(",")}
+                    </ListItem>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>Chuột</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="w-full grid gap-3 grid-cols-3 grid-rows-3 p-6 ">
+                  <li className="row-span-2 col-span-2">
+                    <NavigationMenuLink asChild>
+                      <Link
+                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                        href="/product/chuot"
+                      >
+                        <Icons.logo className="h-6 w-6" />
+                        <div className="mb-2 mt-4 text-lg font-medium">
+                          Chuột cao cấp
+                        </div>
+                        <p className="text-sm leading-tight text-muted-foreground">
+                          Cung cấp các mặt hàng Chuột văn phòng,Chuột gaming,...
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                  </li>
+                  {menuMouse.map((menu) => (
+                    <ListItem href={menu.href} title={menu.title} key={menu.id}>
+                      {menu.models?.join(",")}
+                    </ListItem>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+      </div>
+    </>
   );
 };
 
 export default NavBar;
+
+const ListItem = React.forwardRef<
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
+>(({ className, title, children, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            {children}
+          </p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  );
+});
+ListItem.displayName = "ListItem";

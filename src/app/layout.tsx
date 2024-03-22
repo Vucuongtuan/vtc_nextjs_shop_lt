@@ -1,23 +1,20 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-// import { getServerSession } from "next-auth";
-
-import StoreProvider from "./StoreProvider";
-import { Suspense } from "react";
-import TanStackProviders from "./tanStackProvider";
-import GlobalLoading from "@/components/loadingPage";
 import Header from "@/components/header";
+import StoreProvider from "./StoreProvider";
 import Footer from "@/components/footer";
-import Cart from "@/components/cart";
-
+import TanStackProviders from "./tanstackProvider";
+import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "@/components/theme-provider";
+import { useToast } from "@/components/ui/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title:
-    "VTC Laptop - Chuyên bán những sản phầm laptop - bàn phím - chuột giá tốt ",
+  title: "Laptop_TC | Chuyên cung cấp những sản phẩm laptop gaming , văn phòng",
   description:
-    "VTC Laptop - Laptop và Gaming Chuyên Nghiệp- Website : www.vtclaptop.com- Hotline : 181213202",
+    "Laptop_TC | Chuyên cung cấp những sản phẩm laptop gaming , văn phòng",
 };
 
 export default function RootLayout({
@@ -30,14 +27,13 @@ export default function RootLayout({
       <body className={inter.className}>
         <TanStackProviders>
           <StoreProvider>
-            <Suspense fallback={<GlobalLoading />}>
-              <Header />
-              {children}
-              <Footer />
-              <Cart />
-            </Suspense>
+            <Header />
+            {children}
+            <Footer />
           </StoreProvider>
         </TanStackProviders>
+
+        <Toaster />
       </body>
     </html>
   );
