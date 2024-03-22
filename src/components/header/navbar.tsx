@@ -41,13 +41,11 @@ import Cookies from "js-cookie";
 import React, { useEffect } from "react";
 import { Icons } from "@/components/ui/icons";
 import Link from "next/link";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useTheme } from "next-themes";
+
 import { Button } from "@/components/ui/button";
-import Cart from "@/components/Cart";
-import SearchBox from "@/components/searchBox";
-import LoginAndResigter from "@/components/loginAndResigter";
+import Cart from "../Cart";
+import SearchBox from "../searchBox";
+import LoginAndResigter from "../loginAndResigter";
 
 const NavBar = ({
   menuLaptop,
